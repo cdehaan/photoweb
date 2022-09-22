@@ -1,0 +1,91 @@
+.LoginDescription {
+    display: flex;
+    margin: 5vh 10%;
+}
+
+.Login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    background-color: #fff;
+
+    width: 50%;
+    min-height: 40%;
+    border-radius: 0.5vh;
+    border: 0.3vh solid #aaa;
+    padding: 3% 5%;
+
+    font-size: 3vh;
+}
+
+@media only screen and (orientation: portrait) {
+    .Login {
+        width: 80%;
+        padding: 5% 5%;
+        font-size: 3vh;
+    }
+}
+
+.LoginLine {
+    width: 100%;
+    height: 0.3vh;
+    background: linear-gradient(to right, #888, #888 15%, #eee 100%);
+    margin: 2vh 0;
+}
+
+.LoginGrid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 40% 60%;
+}
+
+@media only screen and (orientation: portrait) {
+    .LoginGrid {
+        grid-template-columns: 100%;
+    }
+}
+
+
+.LoginTitle {
+    display: flex;
+    width: 100%;
+    padding: 1vh;
+    white-space: nowrap;
+}
+
+.LoginHeader {
+    font-size: 3vh;
+}
+
+.LoginInput {
+    width: 70%;
+    font-size: 3vh;
+    margin-bottom: 4vh;
+    border-radius: 0.5vh;
+    border: 1px solid #888;
+    box-shadow: rgba(0, 0, 0, 0.1) 0.5vh 0.5vh 0.5vh;
+    background: linear-gradient(to bottom, #ccc, rgba(255,255,255,0) 0.5vh),
+                linear-gradient(to right,  #ccc, rgba(255,255,255,0) 0.5vh);
+}
+
+@media only screen and (orientation: portrait) {
+    .LoginInput {
+        width: 90%;
+    }
+}
+
+.LoginButton {
+    background: linear-gradient(to bottom, #90c5fc, #4b88ea);
+    grid-column-end: -1;
+    width: 60%;
+    padding: 1vh;
+    text-align: center;
+    color: #fff;
+    font-size: 3vh;
+    border-radius: 1vh;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    text-shadow: 0.2vh 0.2vh 0.5vh #888;
+}
+
