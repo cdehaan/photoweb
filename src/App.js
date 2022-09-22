@@ -1,6 +1,7 @@
 import './App.css';
 import Login from './Login/Login';
 import Header from './Header';
+import Photos from './Photos/Photos';
 import { useState } from 'react';
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
   return (
     <>
       <Header userStatus={userStatus} setUserStatus={setUserStatus}/>
-      {userStatus.loggedin ? "Logged in" : <Login Authenticate={Authenticate} />}
+      {userStatus.loggedin ? <Photos /> : <Login Authenticate={Authenticate} />}
     </>
   );
 }
