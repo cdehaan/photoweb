@@ -12,8 +12,8 @@ function Photos(props) {
         setCurrentDirectory(null);
 
         async function PullPhotoList() {
-            const photoListEndpoint = (process.env.NODE_ENV === 'development' ? "http://localhost/photoweb/public/" : "../") + `pullPhotoList.php`;
-            const photoListData = {token: props.userData.token};
+            const photoListEndpoint = (process.env.NODE_ENV === 'development' ? "http://localhost/photoweb/public/" : "") + `pullPhotoList.php`;
+            const photoListData = {token: props.userData.token, environment: (process.env.NODE_ENV === 'development' ? 'development' : 'production')};
     
             const response = await fetch(photoListEndpoint, {
                 method: 'POST',
@@ -43,7 +43,8 @@ function Photos(props) {
         <div className='Photos'>
             <span className='PhotosHeader'>Photos</span>
             {
-            (Object.keys(photoData).length > 0 && currentDirectory === null) ? <PhotoList photoData={photoData} setCurrentDirectory={setCurrentDirectory} /> :
+            (Object.keys(photoData).length === 0) ? null :
+            (currentDirectory === null) ? <PhotoList photoData={photoData} setCurrentDirectory={setCurrentDirectory} /> :
             (openFile === null) ? <Thumbnails userData={props.userData} currentDirectory={currentDirectory} closeDirectory={closeDirectory} /> :
             <div>An image</div>
             }

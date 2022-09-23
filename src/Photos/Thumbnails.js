@@ -10,7 +10,7 @@ function Thumbnails(props) {
 
     useEffect(() => {
         async function PullThumbnails() {
-            const thumbnailsEndpoint = (process.env.NODE_ENV === 'development' ? "http://localhost/photoweb/public/" : "../") + `pullThumbnails.php`;
+            const thumbnailsEndpoint = (process.env.NODE_ENV === 'development' ? "http://localhost/photoweb/public/" : "") + `pullThumbnails.php`;
             const photoListData = {token: token, currentDirectory: currentDirectory};
     
             const response = await fetch(thumbnailsEndpoint, {
@@ -67,10 +67,12 @@ function Thumbnails(props) {
         )
     });
 
+    const directoryToShow = (process.env.NODE_ENV === 'development' ? currentDirectory?.slice(3) : currentDirectory);
+
     return(
         <>
             <div className='ThumbnailsHeader'>
-                <div className='ThumbnailsInfo'>{currentDirectory?.slice(3)}</div>
+                <div className='ThumbnailsInfo'>{directoryToShow}</div>
                 <div className='ThumbnailsButtons'>
                     {(selectedFiles.length > 0) ? <div className='ThumbnailsButton'>↓</div> : null}
                     <div className='ThumbnailsButton' onClick={props.closeDirectory}>✖</div>

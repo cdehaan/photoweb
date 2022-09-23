@@ -2,7 +2,8 @@ import React from 'react';
 
 function PhotoList(props) {
     function DirectoryList(data, depth) {
-        if(Object.keys(data).length === 0) { return []; }
+        if(Object.keys(data).length === 0)  { return []; }
+        if(Object.values(data)[0] === null) { return []; }
         const currentList = [];
         const directoryPath = Object.keys(data)[0];
         const directoryName = directoryPath.slice(0, -1).substring(directoryPath.slice(0, -1).lastIndexOf('/')+1);

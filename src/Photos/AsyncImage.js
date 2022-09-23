@@ -11,7 +11,7 @@ const AsyncImage = (props) => {
         async function PullPhoto() {
             if(!src) { return; }
             if(!token) { return; }
-            const pullPhotoEndpoint = (process.env.NODE_ENV === 'development' ? "http://localhost/photoweb/public/" : "../") + `pullPhoto.php`;
+            const pullPhotoEndpoint = (process.env.NODE_ENV === 'development' ? "http://localhost/photoweb/public/" : "") + `pullPhoto.php`;
             const pullPhotoData = {src: src, token: token};
 
             const response = await fetch(pullPhotoEndpoint, {
