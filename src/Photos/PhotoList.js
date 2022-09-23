@@ -8,7 +8,7 @@ function PhotoList(props) {
         const directoryName = directoryPath.slice(0, -1).substring(directoryPath.slice(0, -1).lastIndexOf('/')+1);
         const fileCount = Object.values(data)[0].filter(value => {return (!(typeof value === 'object'))}).length;
 
-        currentList.push(<div key={directoryPath} className="DirectoryName" style={{"paddingLeft": `${depth}rem`}}><span className={`${fileCount > 0 ? "DirectoryLink" : ""}`} onClick={fileCount > 0 ? () => OpenDirectory(directoryPath) : null}>{directoryName}</span> ({fileCount})</div>);
+        currentList.push(<div key={directoryPath} className="DirectoryName" style={{"paddingLeft": `${depth}rem`, background: `hsla(0, 50%, 50%, ${depth*0})`}}><span className={`${fileCount > 0 ? "DirectoryLink" : ""}`} onClick={fileCount > 0 ? () => OpenDirectory(directoryPath) : null}>{directoryName}</span> ({fileCount})</div>);
         Object.values(data).forEach(value => {
             if(Array.isArray(value)) {
                 value.forEach(path => {
@@ -24,7 +24,7 @@ function PhotoList(props) {
         return currentList;
     }
 
-    const photoList = DirectoryList(props.photoData, 0);
+    const photoList = <div className='PhotoList'>{DirectoryList(props.photoData, 0)}</div>
 
     function OpenDirectory(directoryPath) {
         props.setCurrentDirectory(directoryPath);

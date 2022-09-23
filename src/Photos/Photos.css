@@ -1,12 +1,54 @@
-.PhotoList {
+.Photos {
     font-size: 1rem;
     width: 100%;
+}
+
+.PhotosHeader {
+    display: flex;
+    justify-content: center;
+    font-size: 4vh;
+    margin: 2vh;
+}
+
+.PhotoList {
+    margin: 0 4vh;
+    font-size: 2vh;
+}
+
+.DirectoryName {
+    padding: 0.5vh 0;
 }
 
 .DirectoryLink {
     color: #369;
     text-decoration: underline;
     cursor: pointer;
+}
+
+.ThumbnailsHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ThumbnailsInfo {
+    font-size: 3vh;
+    margin: 0 3vh;
+}
+
+.ThumbnailsButtons {
+    display: flex;
+}
+
+.ThumbnailsButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 2vh;
+    border: 1px solid #888;
+    border-radius: 0.5vh;
+    width: 4vh;
+    height: 4vh;
+    font-size: 3vh;
 }
 
 .Thumbnails {
@@ -25,9 +67,7 @@
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    filter: blur(10px);
+    filter: blur(5px);
 }
 
 .ThumbnailSpinner {
@@ -41,4 +81,28 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-color: rgba(255,255,255,0.5);
+}
+
+.ThumbnailImg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.ThumbnailCheckbox {
+    position: absolute;
+    top: 1vh;
+    right: 1vh;
+    width: 2vh;
+    height: 2vh;
+    background: linear-gradient(to bottom right, #bbb, #fff 50%);
+    border: 0.2vh solid #888;
+    border-radius: 0.5vh;
+    font-size: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
