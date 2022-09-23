@@ -5,7 +5,7 @@ import Photos from './Photos/Photos';
 import { useState } from 'react';
 
 function App() {
-  const [userStatus, setUserStatus] = useState({username: null, loggedin: false, token: null});
+  const [userData, setUserData] = useState({username: null, loggedin: false, token: null});
 
   async function Authenticate(username, password) {
     document.getElementById('LoginError').innerHTML = null;
@@ -29,7 +29,7 @@ function App() {
       return;
     }
 
-    setUserStatus(previousStatus => {
+    setUserData(previousStatus => {
       const newStatus = {...previousStatus, username: username, token: responseJson.token, loggedin: true};
       return newStatus;
     })
@@ -37,8 +37,8 @@ function App() {
 
   return (
     <>
-      <Header userStatus={userStatus} setUserStatus={setUserStatus}/>
-      {userStatus.loggedin ? <Photos /> : <Login Authenticate={Authenticate} />}
+      <Header userStatus={userData} setUserStatus={setUserData}/>
+      {userData.loggedin ? <Photos userData={userData} /> : <Login Authenticate={Authenticate} />}
     </>
   );
 }

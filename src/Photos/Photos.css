@@ -1,0 +1,9 @@
+.PhotoList {
+    font-size: 1rem;
+}
+
+.DirectoryLink {
+    color: #369;
+    text-decoration: underline;
+    cursor: pointer;
+}
