@@ -6,7 +6,7 @@ function PhotoList(props) {
         const currentList = [];
         const directoryPath = Object.keys(data)[0];
         const directoryName = directoryPath.slice(0, -1).substring(directoryPath.slice(0, -1).lastIndexOf('/')+1);
-        const fileCount = Object.values(data)[0].filter(value => {return (!Array.isArray(value))}).length;
+        const fileCount = Object.values(data)[0].filter(value => {return (!(typeof value === 'object'))}).length;
 
         currentList.push(<div key={directoryPath} className="DirectoryName" style={{"paddingLeft": `${depth}rem`}}><span className={`${fileCount > 0 ? "DirectoryLink" : ""}`} onClick={fileCount > 0 ? () => OpenDirectory(directoryPath) : null}>{directoryName}</span> ({fileCount})</div>);
         Object.values(data).forEach(value => {

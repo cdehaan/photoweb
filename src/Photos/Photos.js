@@ -14,13 +14,13 @@ function Photos(props) {
         setSelectedFiles([]);
 
         async function PullPhotoList() {
-            const logoutEndpoint = (process.env.NODE_ENV === 'development' ? "http://localhost/photoweb/public/" : "../") + `pullPhotoList.php`;
-            const logoutData = {token: props.userData.token};
+            const photoListEndpoint = (process.env.NODE_ENV === 'development' ? "http://localhost/photoweb/public/" : "../") + `pullPhotoList.php`;
+            const photoListData = {token: props.userData.token};
     
-            const response = await fetch(logoutEndpoint, {
+            const response = await fetch(photoListEndpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(logoutData)
+                body: JSON.stringify(photoListData)
             });
           
             const responseText = await response.text();
@@ -43,10 +43,10 @@ function Photos(props) {
 
     return(
         <div className='PhotoList'>
-            <span>Photos{ currentDirectory !== null ? currentDirectory : null}</span>
+            <span>Photos</span>
             {
             (Object.keys(photoData).length > 0 && currentDirectory === null) ? <PhotoList photoData={photoData} setCurrentDirectory={setCurrentDirectory} /> :
-            (openFile === null) ? <Thumbnails currentDirectory={currentDirectory} closeDirectory={closeDirectory} /> :
+            (openFile === null) ? <Thumbnails userData={props.userData} currentDirectory={currentDirectory} closeDirectory={closeDirectory} /> :
             <div>An image</div>
             }
         </div>
