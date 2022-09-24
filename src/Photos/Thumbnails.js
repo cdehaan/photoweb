@@ -3,15 +3,18 @@ import AsyncImage from './AsyncImage';
 
 function Thumbnails(props) {
     const token = props.userData.token;
+    const username = props.userData.username;
     const currentDirectory = props.currentDirectory;
+
     const [thumbnailsData, setThumbnailsData] = useState([]);
     const [thumbnailSize, setThumbnailSize] = useState(10); // vmax
-    const [selectedFiles, setSelectedFiles] = useState([]);
+    const [selectedImages, setSelectedImages] = useState([]);
+    const [openIndex, setOpenIndex] = useState(null);
 
     useEffect(() => {
         async function PullThumbnails() {
             const thumbnailsEndpoint = (process.env.NODE_ENV === 'development' ? "http://localhost/photoweb/public/" : "") + `pullThumbnails.php`;
-            const photoListData = {token: token, currentDirectory: currentDirectory};
+            const photoListData = {username: username, token: token, currentDirectory: currentDirectory};
     
             const response = await fetch(thumbnailsEndpoint, {
                 method: 'POST',
@@ -34,7 +37,7 @@ function Thumbnails(props) {
     }, [token, currentDirectory]);
 
     function CheckboxToggle(index) {
-        setSelectedFiles(previousSelectedFiles => {
+        setSelectedImages(previousSelectedFiles => {
             if(previousSelectedFiles.includes(index)) {
                 return previousSelectedFiles.filter(file => {return (file !== index)});
             } else {
@@ -43,7 +46,22 @@ function Thumbnails(props) {
         });
     }
 
-    const thumbnails = thumbnailsData.map((thumbnail, index) => {
+    function DownloadPhoto() {
+        if(openIndex === null) { return; }
+        const href = document.querySelector(`a[index="${openIndex}"]`);
+        href.click();
+    }
+
+    function DownloadPhotos() {
+        const checkedPhotos = [...document.querySelector(".Thumbnails").querySelectorAll(".ThumbnailCheckbox[download]")];
+        checkedPhotos.forEach(photo => {
+            const href = photo.closest(".ThumbnailWrapper").querySelector("a");
+            href.click();
+        });    
+    }
+
+    const thumbnails = thumbnailsData?.images?.map((thumbnail, index) => {
+        const selected = selectedImages.includes(index);
         const pixels = [];
         const thumbnailX = Math.max(...thumbnail.thumbnailRGB.map(o => o.x));
         const thumbnailY = Math.max(...thumbnail.thumbnailRGB.map(o => o.y));
@@ -61,26 +79,43 @@ function Thumbnails(props) {
             <div key={thumbnail.filename} className="ThumbnailWrapper" style={{height: `${thumbnailSize}vmax`, width: width}} index={index}>
                 <div className='Thumbnail' style={{gridTemplateColumns: `repeat(${thumbnailX}, 1fr)`, gridTemplateRows: `repeat(${thumbnailY}, 1fr)`}}>{pixels}</div>
                 <div className='ThumbnailSpinner'></div>
-                <AsyncImage src={thumbnail.fullPath} token={token} />
-                <div className='ThumbnailCheckbox' style={{opacity: (selectedFiles.includes(index) ? 1 : 0.75)}} onClick={() => {CheckboxToggle(index)}}>{(selectedFiles.includes(index) ? "✔" : "")}</div>
+                <AsyncImage fullPath={thumbnail.fullPath} username={username} token={token} index={index} />
+                <div className='ThumbnailCover' onClick={() => {setOpenIndex(index)}}></div>
+                <div className='ThumbnailCheckbox' download={selected} style={{opacity: (selected ? 1 : 0.75)}} onClick={() => {CheckboxToggle(index)}}>{(selected ? "✔" : "")}</div>
             </div>
         )
     });
 
-    const directoryToShow = (process.env.NODE_ENV === 'development' ? currentDirectory?.slice(3) : currentDirectory);
+    // If a directory name is given, use that. Otherwise, pull the top folder name
+    const directoryName = thumbnailsData?.name || currentDirectory.split("/").filter(text => {return text.length > 0}).slice(-1)[0];
+
+    const openImageUrl = (openIndex !== null) ? document.querySelector(`.ThumbnailImg[index="${openIndex}"]`)?.src : null;
+    const openImage = (openImageUrl !== null) ?
+    <div className='OpenImageWrapper'>
+        <div className='OpenImageHeader'>
+            <div className='OpenImageButton DownloadImage' onClick={DownloadPhoto}>↓</div>
+            <div className='OpenImageButton CloseImage' onClick={() => {setOpenIndex(null)}}>✖</div>
+        </div>
+        <div className='OpenImageButton NextImage' onClick={() => {setOpenIndex(previousOpenIndex => { return ((previousOpenIndex+1)%thumbnailsData.images.length)})}}>❯</div>
+        <div className='OpenImageButton PreviousImage' onClick={() => {setOpenIndex(previousOpenIndex => { return ((previousOpenIndex+thumbnailsData.images.length-1)%thumbnailsData.images.length)})}}>❮</div>
+        <img className='OpenImage' src={openImageUrl} />
+    </div>
+    : null;
 
     return(
         <>
             <div className='ThumbnailsHeader'>
-                <div className='ThumbnailsInfo'>{directoryToShow}</div>
+                <div className='ThumbnailsInfo'>{directoryName}</div>
                 <div className='ThumbnailsButtons'>
-                    {(selectedFiles.length > 0) ? <div className='ThumbnailsButton'>↓</div> : null}
+                    {(selectedImages.length > 0) ? <div className='ThumbnailsButton' onClick={DownloadPhotos}>↓</div> : null}
                     <div className='ThumbnailsButton' onClick={props.closeDirectory}>✖</div>
                 </div>
             </div>
             <div className='Thumbnails'>
                 {thumbnails}
             </div>
+            {openImage}
+            
         </>
     )
 }

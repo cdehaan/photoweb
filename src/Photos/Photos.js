@@ -4,16 +4,16 @@ import Thumbnails from './Thumbnails';
 import './Photos.css';
 
 function Photos(props) {
+    const userData = props.userData;
     const [photoData, setPhotoData] = useState({});
     const [currentDirectory, setCurrentDirectory] = useState(null);
-    const [openFile, setOpenFile] = useState(null);
 
     useEffect(() => {
         setCurrentDirectory(null);
 
         async function PullPhotoList() {
             const photoListEndpoint = (process.env.NODE_ENV === 'development' ? "http://localhost/photoweb/public/" : "") + `pullPhotoList.php`;
-            const photoListData = {token: props.userData.token, environment: (process.env.NODE_ENV === 'development' ? 'development' : 'production')};
+            const photoListData = {username: userData.username, token: userData.token, environment: (process.env.NODE_ENV === 'development' ? 'development' : 'production')};
     
             const response = await fetch(photoListEndpoint, {
                 method: 'POST',
@@ -33,7 +33,7 @@ function Photos(props) {
         }
 
         PullPhotoList();
-    }, [props.userData]); // run at "mount", and if user changes
+    }, [userData]); // run at "mount", and if user changes
 
     function closeDirectory() {
         setCurrentDirectory(null);
@@ -45,8 +45,7 @@ function Photos(props) {
             {
             (Object.keys(photoData).length === 0) ? null :
             (currentDirectory === null) ? <PhotoList photoData={photoData} setCurrentDirectory={setCurrentDirectory} /> :
-            (openFile === null) ? <Thumbnails userData={props.userData} currentDirectory={currentDirectory} closeDirectory={closeDirectory} /> :
-            <div>An image</div>
+            <Thumbnails userData={userData} currentDirectory={currentDirectory} closeDirectory={closeDirectory} />
             }
         </div>
     )

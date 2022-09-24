@@ -2,7 +2,7 @@ import React from 'react';
 import './Login.css';
 
 function Login(props) {
-    function LoginClick(event) {
+    function LoginClick() {
         const idInput = document.getElementById("LoginId");
         const passwordInput = document.getElementById("LoginPassword");
 
@@ -11,7 +11,7 @@ function Login(props) {
 
         if(loginId === "") { idInput.focus(); return; }
         if(loginPassword === "") { passwordInput.focus(); return; }
-        props.Authenticate(loginId, loginPassword);
+        props.Signin(loginId, loginPassword);
     }
 
     return(
