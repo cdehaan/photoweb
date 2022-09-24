@@ -7,6 +7,10 @@ function Header(props) {
     const userData = props.userData;
     const setUserData = props.setUserData;
     async function Logout() {
+        const date = new Date();
+        document.cookie = `username=; expires=${date.toGMTString()}, SameSite=Lax; Secure`;
+        document.cookie = `token=;    expires=${date.toGMTString()}, SameSite=Lax; Secure`;
+
         const logoutEndpoint = (process.env.NODE_ENV === 'development' ? "http://localhost/photoweb/public/" : "") + `logout.php`;
         const logoutData = {username: userData.username, token: userData.token};
 
@@ -20,13 +24,8 @@ function Header(props) {
     
         if(json.error === true) {
             console.log(json.errorMessage);
-            document.getElementById('LoginError').innerHTML = json.errorMessage;
             return;
         }
-
-        const date = new Date();
-        document.cookie = `username=; expires=${date.toGMTString()}, SameSite=Lax; Secure`;
-        document.cookie = `token=;    expires=${date.toGMTString()}, SameSite=Lax; Secure`;
 
         setUserData(previousStatus => {
             const newStatus = {...previousStatus, username: null, token: null, loggedin: false};

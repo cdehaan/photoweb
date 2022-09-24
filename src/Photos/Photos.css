@@ -9,11 +9,12 @@
     display: flex;
     justify-content: center;
     font-size: 4vh;
-    margin: 2vh;
+    padding: 2vh;
+    background-color: #eee;
 }
 
 .PhotoList {
-    margin: 0 4vh;
+    margin: 2vh 4vh;
     font-size: 2vh;
 }
 
@@ -30,6 +31,9 @@
 .ThumbnailsHeader {
     display: flex;
     justify-content: space-between;
+    background-color: #eee;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 3px 4px -1px, rgba(0, 0, 0, 0.3) 0px 1px 2px -1px;
+    padding: 1vh 0;
 }
 
 .ThumbnailsInfo {
@@ -48,10 +52,25 @@
     margin: 0 2vh;
     border: 1px solid #888;
     border-radius: 0.5vh;
+    background-color: #fff;
     width: 4vh;
     height: 4vh;
     font-size: 3vh;
     user-select: none;
+}
+
+.DownloadButton {
+    background-image: url('download.svg');
+    background-size: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.CloseImage {
+    background-image: url('x.svg');
+    background-size: 70%;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 .Thumbnails {
@@ -137,9 +156,11 @@
     top: 0;
     left: 0;
     right: 0;
+    padding: 2vh 0;
 
     display: flex;
     justify-content: flex-end;
+    align-items: center;
 }
 
 .OpenImageButton {
@@ -156,14 +177,30 @@
     user-select: none;
 }
 
-.NextImage {
-    position: absolute;
-    right: 0;
-}
-
 .PreviousImage {
     position: absolute;
     left: 0;
+    background-image: url('leftChevron.svg');
+    background-size: 80% 80%;
+    background-position: 0% center;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    border: 1px solid #888;
+    border-radius: 0.5vh;
+    opacity: 0.75;
+}
+
+.NextImage {
+    position: absolute;
+    right: 0;
+    background-image: url(rightChevron.svg);
+    background-size: 80% 80%;
+    background-position: 100% center;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    border: 1px solid #888;
+    border-radius: 0.5vh;
+    opacity: 0.75;
 }
 
 .OpenImage {

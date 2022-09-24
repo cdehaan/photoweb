@@ -89,26 +89,33 @@ function Thumbnails(props) {
     // If a directory name is given, use that. Otherwise, pull the top folder name
     const directoryName = thumbnailsData?.name || currentDirectory.split("/").filter(text => {return text.length > 0}).slice(-1)[0];
 
+    // Only show left/right arrows if there's more than 1 picture ❮❯
+    const openImageArrows = (thumbnailsData.images?.length > 1) &&
+        <>
+            <div className='OpenImageButton NextImage' onClick={() => {setOpenIndex(previousOpenIndex => { return ((previousOpenIndex+1)%thumbnailsData.images.length)})}}></div>
+            <div className='OpenImageButton PreviousImage' onClick={() => {setOpenIndex(previousOpenIndex => { return ((previousOpenIndex+thumbnailsData.images.length-1)%thumbnailsData.images.length)})}}></div>
+        </>
+
     const openImageUrl = (openIndex !== null) ? document.querySelector(`.ThumbnailImg[index="${openIndex}"]`)?.src : null;
     const openImage = (openImageUrl !== null) ?
     <div className='OpenImageWrapper'>
         <div className='OpenImageHeader'>
-            <div className='OpenImageButton DownloadImage' onClick={DownloadPhoto}>↓</div>
-            <div className='OpenImageButton CloseImage' onClick={() => {setOpenIndex(null)}}>✖</div>
+            <div className='ThumbnailsButton DownloadButton' onClick={DownloadPhoto}></div>
+            <div className='ThumbnailsButton CloseImage' onClick={() => {setOpenIndex(null)}}></div>
         </div>
-        <div className='OpenImageButton NextImage' onClick={() => {setOpenIndex(previousOpenIndex => { return ((previousOpenIndex+1)%thumbnailsData.images.length)})}}>❯</div>
-        <div className='OpenImageButton PreviousImage' onClick={() => {setOpenIndex(previousOpenIndex => { return ((previousOpenIndex+thumbnailsData.images.length-1)%thumbnailsData.images.length)})}}>❮</div>
+        {openImageArrows}
         <img className='OpenImage' src={openImageUrl} />
     </div>
     : null;
 
+    //"⇊" : "↓"
     return(
         <>
             <div className='ThumbnailsHeader'>
                 <div className='ThumbnailsInfo'>{directoryName}</div>
                 <div className='ThumbnailsButtons'>
-                    {(selectedImages.length > 0) ? <div className='ThumbnailsButton' onClick={DownloadPhotos}>↓</div> : null}
-                    <div className='ThumbnailsButton' onClick={props.closeDirectory}>✖</div>
+                    {(selectedImages.length > 0) ? <div className='ThumbnailsButton DownloadButton' onClick={DownloadPhotos}>{(selectedImages.length > 1) ? "" : ""}</div> : null}
+                    <div className='ThumbnailsButton CloseImage' onClick={props.closeDirectory}></div>
                 </div>
             </div>
             <div className='Thumbnails'>

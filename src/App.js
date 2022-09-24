@@ -53,6 +53,15 @@ function App() {
         const newStatus = {...previousStatus, username: username, token: token, loggedin: true};
         return newStatus;
       })  
+    } else {
+      const date = new Date();
+      document.cookie = `username=; expires=${date.toGMTString()}, SameSite=Lax; Secure`;
+      document.cookie = `token=;    expires=${date.toGMTString()}, SameSite=Lax; Secure`;
+
+      setUserData(previousStatus => {
+        const newStatus = {...previousStatus, username: null, token: null, loggedin: false};
+        return newStatus;
+      })  
     }
   }
 

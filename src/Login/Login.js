@@ -16,7 +16,7 @@ function Login(props) {
 
     return(
         <>
-        <div className='LoginDescription'>ゴールデンウィーク 2022</div>
+        <div className='LoginDescription'>GW 2022 写真</div>
         <div className='Login'>
             <span  className='LoginTitle'>フォトサイトログイン</span>
             <div   className='LoginLine'></div>

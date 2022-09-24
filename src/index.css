@@ -6,6 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 5vh;
+  background-color: #ccc;
 }
 
 code {
@@ -23,5 +24,4 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #ddd;
 }
