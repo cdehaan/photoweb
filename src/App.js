@@ -54,6 +54,8 @@ function App() {
         return newStatus;
       })  
     } else {
+      console.log(responseJson.errorMessage);
+
       const date = new Date();
       document.cookie = `username=; expires=${date.toGMTString()}, SameSite=Lax; Secure`;
       document.cookie = `token=;    expires=${date.toGMTString()}, SameSite=Lax; Secure`;
