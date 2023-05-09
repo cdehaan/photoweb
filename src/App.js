@@ -1,6 +1,6 @@
 import './App.css';
 import Login from './Login/Login';
-import Header from './Header';
+import Header from './Header.tsx';
 import Photos from './Photos/Photos';
 import { useEffect, useState } from 'react';
 import spinner from './spinner.svg';

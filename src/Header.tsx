@@ -8,8 +8,8 @@ function Header(props) {
     const setUserData = props.setUserData;
     async function Logout() {
         const date = new Date();
-        document.cookie = `username=; expires=${date.toGMTString()}, SameSite=Lax; Secure`;
-        document.cookie = `token=;    expires=${date.toGMTString()}, SameSite=Lax; Secure`;
+        document.cookie = `username=; expires=${date.toUTCString()}, SameSite=Lax; Secure`;
+        document.cookie = `token=;    expires=${date.toUTCString()}, SameSite=Lax; Secure`;
 
         const logoutEndpoint = (process.env.NODE_ENV === 'development' ? "http://localhost/photoweb/public/" : "") + `logout.php`;
         const logoutData = {username: userData.username, token: userData.token};
